@@ -3,13 +3,15 @@ import os
 from typing import TYPE_CHECKING
 from dotenv import load_dotenv
 import re
-load_dotenv("db.env")
+#load_dotenv("db.env")
+load_dotenv("_libs/db.env")
 
 DB_USER = os.getenv("MYSQL_USER")
 DB_PASSWORD = os.getenv("MYSQL_PASSWORD")
 DB_DBNAME = os.getenv("MYSQL_DB")
 DB_HOST = os.getenv("MYSQL_HOST")
 DB_PORT = int(os.getenv("MYSQL_PORT"))
+
 
 
 class Database:
