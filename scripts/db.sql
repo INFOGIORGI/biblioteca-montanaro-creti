@@ -1,6 +1,5 @@
-#Creazione tabelle (Database della scuola)
-
-"""
+--sql di prova
+--le tabelle verranno creato una sola volta al primo lancio dell'applicazione
 
 CREATE TABLE IF NOT EXISTS Tessere(
         idTessera CHAR(39) AUTO_INCREMENT,
@@ -63,19 +62,3 @@ CREATE TABLE IF NOT EXISTS Catalogo(
         disponibile BOOLEAN NOT NULL ,
         FOREIGN KEY (idLibro) REFERENCES Libri(id) ON DELETE CASCADE
 );
-
-"""
-
-#insert tabelle
-
-"""
-
-INSERT INTO Tessere(email, password, tel) VALUES('prova@gmail.com', 'password', '123456789012');
-
-INSERT INTO Utenti(nome, cognome, numeroPrestiti) VALUES('Samuele', 'Cretì', 0)
-
-INSERT INTO Autori(nome, cognome, DataNascita) VALUES('Franz', 'Kafka', '03/07/1883');
-
-INSERT INTO Libri(ISBN, titolo, genere, dataPub) VALUES('1234567891234', 'La metamorfosi', 'Novella', '1915');
-
-"""
