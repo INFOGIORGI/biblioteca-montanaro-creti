@@ -8,6 +8,8 @@ DROP TABLE IF EXISTS Produzioni;
 DROP TABLE IF EXISTS Prestiti;
 DROP TABLE IF EXISTS Catalogo;
 
+
+
 CREATE TABLE IF NOT EXISTS Tessere(
         idTessera INT AUTO_INCREMENT,
         email VARCHAR(255) NOT NULL,
@@ -15,6 +17,7 @@ CREATE TABLE IF NOT EXISTS Tessere(
         tel VARCHAR(12) NOT NULL,
         PRIMARY KEY(idTessera)
 );
+
 
 CREATE TABLE IF NOT EXISTS Utenti(
         idTessera INT PRIMARY KEY,
@@ -51,6 +54,7 @@ CREATE TABLE IF NOT EXISTS Produzioni(
         FOREIGN KEY (idLibro) REFERENCES Libri(id) ON DELETE CASCADE
 );
 
+
 CREATE TABLE IF NOT EXISTS Prestiti(
         id INT AUTO_INCREMENT PRIMARY KEY,
         idLibro INT NOT NULL,
@@ -62,6 +66,7 @@ CREATE TABLE IF NOT EXISTS Prestiti(
         FOREIGN KEY (idTessera) REFERENCES Tessere(idTessera) ON DELETE CASCADE
 );
 
+
 CREATE TABLE IF NOT EXISTS Catalogo(
         idLibro INT NOT NULL,
         sezione VARCHAR(255) NOT NULL,
@@ -69,6 +74,7 @@ CREATE TABLE IF NOT EXISTS Catalogo(
         disponibile BOOLEAN NOT NULL ,
         FOREIGN KEY (idLibro) REFERENCES Libri(id) ON DELETE CASCADE
 );
+
 
 
 INSERT INTO Tessere (email, password, tel)
