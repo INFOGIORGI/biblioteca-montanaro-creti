@@ -1,13 +1,16 @@
 --sql di prova
 --le tabelle verranno creato una sola volta al primo lancio dell'applicazione
-DROP TABLE IF EXISTS Tessere;
-DROP TABLE IF EXISTS Utenti;
-DROP TABLE IF EXISTS Autori;
-DROP TABLE IF EXISTS Libri;
-DROP TABLE IF EXISTS Produzioni;
+
+-- Elimina prima le tabelle che dipendono da altre
 DROP TABLE IF EXISTS Prestiti;
+DROP TABLE IF EXISTS Utenti;
+DROP TABLE IF EXISTS Produzioni;
 DROP TABLE IF EXISTS Catalogo;
 
+-- Elimina poi le tabelle principali
+DROP TABLE IF EXISTS Libri;
+DROP TABLE IF EXISTS Autori;
+DROP TABLE IF EXISTS Tessere;
 
 
 CREATE TABLE IF NOT EXISTS Tessere(
