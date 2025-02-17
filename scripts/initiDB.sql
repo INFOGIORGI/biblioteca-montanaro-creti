@@ -1,3 +1,8 @@
+
+
+
+
+
 --sql di prova
 --le tabelle verranno creato una sola volta al primo lancio dell'applicazione
 
