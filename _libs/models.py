@@ -11,13 +11,13 @@ per maggiori info vai su "/docs/models.md"
 """
 
 class TesseraModel(TypedDict):
-    idTessera: str
+    idTessera: int
     email: str
     password: str
     tel: str
 
 class UserModel(TypedDict):
-    idTessera: str
+    idTessera: int
     nome: str
     cognome: str
     numeroPrestiti: int
@@ -44,7 +44,7 @@ class ProduzioneModel(TypedDict):
 class PrestitoModel(TypedDict):
     id: int
     idLibro: int
-    idTessera: str
+    idTessera: int
     dataInizio: str
     dataFine: str
     restituito: bool

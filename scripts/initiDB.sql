@@ -1,8 +1,3 @@
-
-
-
-
-
 --sql di prova
 --le tabelle verranno creato una sola volta al primo lancio dell'applicazione
 
@@ -47,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Autori(
 
 
 CREATE TABLE IF NOT EXISTS Libri(
-       ID INT PRIMARY KEY AUTO_INCREMENT,
+       id INT PRIMARY KEY AUTO_INCREMENT,
        ISBN CHAR(13) NOT NULL,
        titolo VARCHAR(255) NOT NULL,
        genere VARCHAR(255) NOT NULL,
