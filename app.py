@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
-users = ['Alice', 'Bob', 'Charlie'] 
+users = ['Alice', 'Bob', 'Charlie']
 
 @app.route("/")
 def hello():
