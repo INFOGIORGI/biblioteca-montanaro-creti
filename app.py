@@ -1,9 +1,4 @@
-from flask import Flask, render_template
-from werkzeug.security import generate_password_hash
-from _libs.db import Database
-from pprint import pprint
-from _libs.models import UserModel
-from _libs.utils import *
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 with app.app_context():  
@@ -14,6 +9,13 @@ with app.app_context():
 @app.route("/")
 def hello():
     return render_template("index.html", message='Ciao mondo!!')
+
+@app.route("/addLibro/", methods = ["GET", "POST"])
+def addLibro():
+    if request.method == "GET":
+        return render_template('libri.html')
+    else:
+        
 
 @app.route("/users")
 def user():
