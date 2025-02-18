@@ -3,24 +3,17 @@ import os
 from typing import TYPE_CHECKING
 from dotenv import load_dotenv
 import re
-load_dotenv("db.env")
-
-DB_USER = os.getenv("MYSQL_USER")
-DB_PASSWORD = os.getenv("MYSQL_PASSWORD")
-DB_DBNAME = os.getenv("MYSQL_DB")
-DB_HOST = os.getenv("MYSQL_HOST")
-DB_PORT = int(os.getenv("MYSQL_PORT"))
 
 
 class Database:
     def __init__(self, app ):
         
         self.app = app
-        self.app.config['MYSQL_HOST'] = DB_HOST
-        self.app.config['MYSQL_USER'] = DB_USER
-        self.app.config['MYSQL_PASSWORD'] = DB_PASSWORD
-        self.app.config['MYSQL_DB'] = DB_DBNAME
-        self.app.config['MYSQL_PORT'] = DB_PORT
+        self.app.config['MYSQL_HOST'] = "138.41.20.102"
+        self.app.config['MYSQL_USER'] = "ospite"
+        self.app.config['MYSQL_PASSWORD'] = "ospite"
+        self.app.config['MYSQL_DB'] = "montanaro_creti"
+        self.app.config['MYSQL_PORT'] = 53306
         self.mysql = MySQL(self.app)
 
         # Connessione per ottenere le tabelle
