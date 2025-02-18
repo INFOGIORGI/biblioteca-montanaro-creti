@@ -15,26 +15,23 @@ def hello() -> str:
 
 @app.route("/addLibro", methods = ["GET", "POST"])
 def addLibro():
-    if request.method == "GET":
-        return render_template('libri.html')
-    else:
-        
+    return render_template("libri.html")
 
 @app.route("/users")
 def user() -> str:
-    return render_template('users.html', users=users)
+    return render_template('users.html')
 
 @app.route("/user/<utente>") 
 def utente(utente) -> str:
     return render_template('profile.html', utente=utente)
 
-@app.route("/register" ,methods=["GET", "POST"])
+"""@app.route("/register" ,methods=["GET", "POST"])
 def register() -> str:
-    return render_template("register.html")
+    return render_template("register.html")"""
 
     
-@app.route("/login", methods=["GET", "POST"])
+"""@app.route("/login", methods=["GET", "POST"])
 def register() -> str:
-    return render_template("login.html")
+    return render_template("login.html")"""
 
 app.run(debug=True)
