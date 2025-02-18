@@ -2,10 +2,13 @@ from flask import Flask, render_template, url_for, request, flash, redirect
 from _libs.db import Database
 from _libs.models import *
 from _libs.utils import *
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 with app.app_context():  
     db = Database(app)
+
 
 
 
@@ -17,24 +20,10 @@ def hello() -> str:
 def addLibro():
     if request.method == "GET":
         return render_template('libri.html')
-    else:
+    else:  
+        ...
         
 
-@app.route("/users")
-def user() -> str:
-    return render_template('users.html', users=users)
 
-@app.route("/user/<utente>") 
-def utente(utente) -> str:
-    return render_template('profile.html', utente=utente)
-
-@app.route("/register" ,methods=["GET", "POST"])
-def register() -> str:
-    return render_template("register.html")
-
-    
-@app.route("/login", methods=["GET", "POST"])
-def register() -> str:
-    return render_template("login.html")
 
 app.run(debug=True)
