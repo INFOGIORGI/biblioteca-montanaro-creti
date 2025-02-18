@@ -16,13 +16,12 @@ with app.app_context():
 def hello() -> str:
     return render_template("index.html", message='Ciao mondo!!')
 
-@app.route("/addLibro/", methods = ["GET", "POST"])
+@app.route("/addLibro", methods = ["GET", "POST"])
 def addLibro():
     if request.method == "GET":
         return render_template('libri.html')
-    else:  
+    else:
         ...
-        
 
 
 
