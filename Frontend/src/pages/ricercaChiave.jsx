@@ -36,7 +36,7 @@ const RicercaChiave = () => {
         <h1 className="text-4xl text-center mt-15">Ricerca per Chiave</h1>
 
         <form className="flex flex-col gap-2 mt-15 max-w-md mx-auto border">
-          <label className="border pb-2 text-center">Bus:</label>
+          <label className="border pb-2 text-center">Ricerca:</label>
           <input
             type="text"
             className="font-bold w-auto h-auto p-1 bg-gray-200 border"
