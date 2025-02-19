@@ -27,6 +27,18 @@ const Navbar = () => {
                     Home
                   </NavLink>
                 </li>
+
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/ricercaLibri"
+                  >
+                    Ricerca Libri
+                  </NavLink>
+                </li>
                 
               </ul>
             </div>
