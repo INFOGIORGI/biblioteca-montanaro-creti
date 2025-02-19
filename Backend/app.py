@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash, redirect
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
 from _libs.db import Database
 from _libs.models import *
 from _libs.utils import *
@@ -16,13 +16,28 @@ with app.app_context():
 def hello() -> str:
     return render_template("index.html", message='Ciao mondo!!')
 
-@app.route("/addLibro", methods = ["GET", "POST"])
+@app.route("/addLibro", methods = ["POST"])
 def addLibro():
-    if request.method == "GET":
-        return render_template('libri.html')
-    else:
-        ...
+    data = request.get_json()
+    isbn = data.get("Isbn")
+    titolo = data.get("Titolo")
+    anno = data.get("Anno")
+    autore = data.get("Autore")
+    genere = data.get("Genere")
 
+    try:
+
+        db.Libri.insert(ISBN=isbn, titolo=titolo, genere=genere, dataPub=anno)
+
+        libroId = db.Libri.getById(titolo=titolo)
+
+        autoreId = db.Autori.getById(nome=autore)
+        print(autoreId[0], libroId[0])
+        db.Produzioni.insert(idAutore=autoreId[0][0],idLibro=libroId[0][0])
+        return jsonify({"message": "operazione riuscita"}), 200
+    except Exception as e:
+        print(f"errore: {e}")
+        return jsonify({"message": "errore"}), 500
 
 
 app.run(debug=True)
