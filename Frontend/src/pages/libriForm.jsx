@@ -31,7 +31,7 @@ const LibriForm = () => {
     const handleSubmit =  async (e) => {
         e.preventDefault();
         try{
-            const response = await axios.post("/addLibro", {
+            const response = await axios.post("http://127.0.0.1:5000/addLibro", {
                 Isbn: isbn,
                 Titolo: titolo,
                 Anno: anno,
