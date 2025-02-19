@@ -31,20 +31,20 @@ const LibriForm = () => {
     const handleSubmit =  async (e) => {
         e.preventDefault();
         try{
-            const response = await axios.post("http://127.0.0.1:5000/addLibro", {
+            const response = await axios.post("/addLibro", {
                 Isbn: isbn,
                 Titolo: titolo,
                 Anno: anno,
                 Autore: autore,
                 Genere: genere
-            })
+            });
     
-            console.log("libro aggiunto con successo: " , response.data)
-            alert("libro aggiunto")
+            console.log("libro aggiunto con successo: " , response.data);
+            alert("libro aggiunto");
             
         }catch (error){
-            console.log("errore con l'aggiunta del libro", error)
-            alert("errore col libro")
+            console.log("errore con l'aggiunta del libro", error);
+            alert("errore col libro");
         }
        
 
@@ -60,7 +60,7 @@ const LibriForm = () => {
                 <input type="text" className='font-bold'  placeholder='Isbn' value={isbn} onChange={handleIsbn}/>
 
                 <label className='border pb-6'>Titolo:</label>
-                <input className='font-bold'  type="text" placeholder='Titolo' value={titolo} onChange={handleTitolo}/>
+                <input className='font-bold '  type="text" placeholder='Titolo' value={titolo} onChange={handleTitolo}/>
 
                 <label className='border pb-6'>Anno:</label>
                 <input type="date" className='font-bold' placeholder='Anno' value={anno} onChange={handleAnno}/>
