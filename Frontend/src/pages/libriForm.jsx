@@ -8,45 +8,39 @@ const LibriForm = () => {
     const [autore, setAutore] = useState("");
     const [genere, setGenere] = useState("");
 
-    const handleIsbn = (e) => {
-        setIsbn(e.target.value)
+    const [state, setState] = useState({
+        isbn: '',
+        titolo: '',
+        anno: '',
+        autore: '',
+        genere: ''
+    })
+
+    const handleTextInput = (e) => {
+        const [name, value] = [e.target.name, e.target.value];
+
+        setState(prev => ({
+            ...prev,
+            [name]: value
+        }))
     }
 
-    const handleTitolo = (e) => {
-        setTitolo(e.target.value)
-    }
 
-    const handleAnno = (e) => {
-        setAnno(e.target.value)
-    }
-    
-    const handleAutore = (e) => {
-        setAutore(e.target.value)
-    }
-
-    const handleGenere = (e) => {
-        setGenere(e.target.value)
-    }
-
-    const handleSubmit =  async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
+        try {
             const response = await axios.post("/addLibro", {
-                Isbn: isbn,
-                Titolo: titolo,
-                Anno: anno,
-                Autore: autore,
-                Genere: genere
+                ...state
             });
-    
-            console.log("libro aggiunto con successo: " , response.data);
+
+            console.log("libro aggiunto con successo: ", response.data);
             alert("libro aggiunto");
-            
-        }catch (error){
+
+        } catch (error) {
             console.log("errore con l'aggiunta del libro", error);
             alert("errore col libro");
         }
-       
+
 
     }
 
@@ -57,28 +51,28 @@ const LibriForm = () => {
             </h1>
             <form onSubmit={handleSubmit} className='flex flex-col gap-5 mt-15  max-w-md mx-auto border ' >
                 <label className='border pb-6'>Isbn:</label>
-                <input type="text" className='font-bold'  placeholder='Isbn' value={isbn} onChange={handleIsbn}/>
+                <input type="text" name="isbn" className='font-bold' placeholder='isbn' value={state.isbn} onChange={handleTextInput} />
 
                 <label className='border pb-6'>Titolo:</label>
-                <input className='font-bold '  type="text" placeholder='Titolo' value={titolo} onChange={handleTitolo}/>
+                <input className='font-bold '  name="titolo" type="text" placeholder='titolo' value={state.titolo} onChange={handleTextInput} />
 
                 <label className='border pb-6'>Anno:</label>
-                <input type="date" className='font-bold' placeholder='Anno' value={anno} onChange={handleAnno}/>
+                <input type="date" className='font-bold' placeholder='Anno' name="anno"value={state.anno} onChange={handleTextInput} />
 
                 <label className='border pb-6'>Autore:</label>
-                <input type="text" className='font-bold'  placeholder='Autore' value={autore} onChange={handleAutore}/>
+                <input type="text" className='font-bold' placeholder='Autore' name="autore" value={state.autore} onChange={handleTextInput} />
 
                 <label className='border pb-6'>Genere:</label>
-                <input type="text" className='font-bold' placeholder='Genere' value={genere} onChange={handleGenere}/>
+                <input type="text" className='font-bold' placeholder='Genere' name="genere" value={state.genere} onChange={handleTextInput} />
 
                 <button className='border pb-6 bg-gray-500 py-4' type="submit">Aggiungi Libro</button>
 
             </form>
         </div>
-        
+
     </>
-    
-)
+
+    )
 
 }
 
