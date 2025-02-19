@@ -19,11 +19,11 @@ def hello() -> str:
 @app.route("/addLibro", methods = ["POST"])
 def addLibro():
     data = request.get_json()
-    isbn = data.get("Isbn")
-    titolo = data.get("Titolo")
-    anno = data.get("Anno")
-    autore = data.get("Autore")
-    genere = data.get("Genere")
+    isbn = data.get("isbn")
+    titolo = data.get("titolo")
+    anno = data.get("anno")
+    autore = data.get("autore")
+    genere = data.get("genere")
 
     try:
         autoreId = db.Autori.getById(nome=autore)
