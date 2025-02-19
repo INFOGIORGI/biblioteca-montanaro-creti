@@ -2,11 +2,6 @@ import React, { useState } from 'react'
 import axios from 'axios';
 
 const LibriForm = () => {
-    const [isbn, setIsbn] = useState("");
-    const [titolo, setTitolo] = useState("");
-    const [anno, setAnno] = useState("");
-    const [autore, setAutore] = useState("");
-    const [genere, setGenere] = useState("");
 
     const [state, setState] = useState({
         isbn: '',
@@ -65,7 +60,7 @@ const LibriForm = () => {
                 <label className='border pb-2 text-center '>Genere:</label>
                 <input type="text" className='font-bold w-auto h-auto p-3 bg-gray-200 border' placeholder='Genere' name="genere" value={state.genere} onChange={handleTextInput} />
 
-                <button className='border pb-6 bg-gray-500 py-4' type="submit">Aggiungi Libro</button>
+                <button className='border pb-6 bg-gray-500 py-4 hover:bg-green-500' type="submit">Aggiungi Libro</button>
 
             </form>
         </div>
