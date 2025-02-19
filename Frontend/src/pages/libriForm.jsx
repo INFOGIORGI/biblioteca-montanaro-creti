@@ -24,7 +24,7 @@ const LibriForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("/addLibro", {
+            const response = await axios.post("/api/addLibro", {
                 ...state
             });
 

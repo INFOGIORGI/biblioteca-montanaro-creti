@@ -69,7 +69,7 @@ class BaseModel:
             with conn.cursor() as cursor:
                 attr, value = next(iter(id.items()))
                 query = f"SELECT * FROM {self.table_name} WHERE {attr} = %s"
-            
+                print(query)
                 cursor.execute(query, (value,))
                 dati = cursor.fetchall()
                 return dati
@@ -136,3 +136,17 @@ class BaseModel:
         except Exception as e:
             print(f"errore durante la update {e}")
             return False
+    
+    def searchLike(self, **attr) -> tuple[tuple]:
+        try:
+            values = list(attr.values())  # Converti in lista per indicizzare
+            keyword = list(attr.keys())  # Converti in lista per indicizzare
+            conn = self.db.getConn()
+            with conn.cursor() as cursor:
+                query = f"SELECT * FROM {self.table_name} WHERE {keyword[0]} LIKE %s"
+                cursor.execute(query, (f"{values[0]}%",))  # Passa come tupla
+                dati = cursor.fetchall()
+                return dati
+        except Exception as e:
+            print(f"errore durante la query {e}")    
+            return ()
