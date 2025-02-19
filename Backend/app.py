@@ -26,12 +26,16 @@ def addLibro():
     genere = data.get("Genere")
 
     try:
+        autoreId = db.Autori.getById(nome=autore)
+
+        if not autoreId[0][0]:
+            return jsonify({"message": "errore"}), 500
 
         db.Libri.insert(ISBN=isbn, titolo=titolo, genere=genere, dataPub=anno)
 
         libroId = db.Libri.getById(titolo=titolo)
 
-        autoreId = db.Autori.getById(nome=autore)
+        
         print(autoreId[0], libroId[0])
         db.Produzioni.insert(idAutore=autoreId[0][0],idLibro=libroId[0][0])
         return jsonify({"message": "operazione riuscita"}), 200
