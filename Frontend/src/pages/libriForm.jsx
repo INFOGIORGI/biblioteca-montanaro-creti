@@ -49,21 +49,21 @@ const LibriForm = () => {
             <h1 className='text-4xl text-center mt-15 '>
                 Aggiungi Libro
             </h1>
-            <form onSubmit={handleSubmit} className='flex flex-col gap-5 mt-15  max-w-md mx-auto border ' >
-                <label className='border pb-6'>Isbn:</label>
-                <input type="text" name="isbn" className='font-bold' placeholder='isbn' value={state.isbn} onChange={handleTextInput} />
+            <form onSubmit={handleSubmit} className='flex flex-col gap-2 mt-15  max-w-md mx-auto border ' >
+                <label className='border pb-2 text-center '>Isbn:</label>
+                <input type="text" className='font-bold w-auto h-auto p-3 bg-gray-200 border'name="isbn" placeholder='isbn' value={state.isbn} onChange={handleTextInput} />
 
-                <label className='border pb-6'>Titolo:</label>
-                <input className='font-bold '  name="titolo" type="text" placeholder='titolo' value={state.titolo} onChange={handleTextInput} />
+                <label className='border pb-2 text-center '>Titolo:</label>
+                <input className='font-bold w-auto h-auto p-3 bg-gray-200 border'   name="titolo" type="text" placeholder='titolo' value={state.titolo} onChange={handleTextInput} />
 
-                <label className='border pb-6'>Anno:</label>
-                <input type="date" className='font-bold' placeholder='Anno' name="anno"value={state.anno} onChange={handleTextInput} />
+                <label className='border pb-2 text-center '>Anno:</label>
+                <input type="date" className='font-bold w-auto h-auto p-3 bg-gray-200 border' placeholder='Anno' name="anno"value={state.anno} onChange={handleTextInput} />
 
-                <label className='border pb-6'>Autore:</label>
-                <input type="text" className='font-bold' placeholder='Autore' name="autore" value={state.autore} onChange={handleTextInput} />
+                <label className='border pb-2 text-center '>Autore:</label>
+                <input type="text"className='font-bold w-auto h-auto p-3 bg-gray-200 border' placeholder='Autore' name="autore" value={state.autore} onChange={handleTextInput} />
 
-                <label className='border pb-6'>Genere:</label>
-                <input type="text" className='font-bold' placeholder='Genere' name="genere" value={state.genere} onChange={handleTextInput} />
+                <label className='border pb-2 text-center '>Genere:</label>
+                <input type="text" className='font-bold w-auto h-auto p-3 bg-gray-200 border' placeholder='Genere' name="genere" value={state.genere} onChange={handleTextInput} />
 
                 <button className='border pb-6 bg-gray-500 py-4' type="submit">Aggiungi Libro</button>
 
