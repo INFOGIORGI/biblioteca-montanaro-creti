@@ -39,6 +39,18 @@ const Navbar = () => {
                     Ricerca Libri
                   </NavLink>
                 </li>
+
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/tuttiLibri"
+                  >
+                    Vedi tutti i libri
+                  </NavLink>
+                </li>
                 
               </ul>
             </div>

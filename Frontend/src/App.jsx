@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Im
 import LibriForm from './pages/libriForm'
 import Navbar from './components/navbar';
 import RicercaChiave from './pages/ricercaChiave';
+import LibriCat from './pages/libriCat';
 axios.defaults.baseURL = "http://127.0.0.1:5000"
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path='/aggiungiLibri' element={<LibriForm />}/>
         <Route path='/ricercaLibri' element={<RicercaChiave />}/>
+        <Route path='/tuttiLibri' element={<LibriCat />}/>
       </Routes> 
     </Router>
   )
