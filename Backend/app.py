@@ -55,4 +55,9 @@ def cercaPerChiave():
     print(dati_dict)
     return jsonify(dati_dict if dati else [])
 
+@app.route("/api/Libri", methods=["GET"])
+def apiLibri():
+    dati = db.Libri.getAll()
+    dict = [{"id": row[0], "ISBN": row[1], "titolo": row[2], "genere": row[3], "dataPub": row[4]} for row in dati]
+    return jsonify(dict if dati else [])
 app.run(debug=True)
