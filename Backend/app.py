@@ -27,8 +27,7 @@ def addLibro():
 
     try:
         autoreId = db.Autori.getById(nome=autore)
-        print(autore)
-        print(autoreId)
+       
         
         if not autoreId:
             return jsonify({"message": "errore"}), 400

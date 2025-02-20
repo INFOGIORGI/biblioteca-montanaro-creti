@@ -85,7 +85,7 @@ const Navbar = () => {
                 to="/aggiungiLibri"
                 onClick={toggleMenu}
               >
-                Home
+                aggiungi Libri
               </NavLink>
             </li>
            

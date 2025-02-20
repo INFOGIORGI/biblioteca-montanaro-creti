@@ -1,7 +1,6 @@
 from flask_mysqldb import MySQL
 import os
 from typing import TYPE_CHECKING
-from dotenv import load_dotenv
 import re
 
 
@@ -10,8 +9,8 @@ class Database:
         
         self.app = app
         self.app.config['MYSQL_HOST'] = "138.41.20.102"
-        self.app.config['MYSQL_USER'] = "ospite"
-        self.app.config['MYSQL_PASSWORD'] = "ospite"
+        self.app.config['MYSQL_USER'] = "5di"
+        self.app.config['MYSQL_PASSWORD'] = "colazzo"
         self.app.config['MYSQL_DB'] = "montanaro_creti"
         self.app.config['MYSQL_PORT'] = 53306
         self.mysql = MySQL(self.app)
