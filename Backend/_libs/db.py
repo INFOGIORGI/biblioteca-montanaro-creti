@@ -21,12 +21,39 @@ class Database:
         cursor.execute("SHOW TABLES")
         tables = cursor.fetchall()
         cursor.close()
-    
+
+        
 
         # Creazione dinamica dei modelli per ogni tabella
         for (table_name,) in tables:
             print(f"tabella trovata: {table_name}")
-            setattr(self, table_name, BaseModel(table_name, self)) 
+
+            model = BaseModel(table_name, self)
+            if table_name.lower() == "libri":
+                setattr(model, "getLibriConAutori", self.getLibriConAutori.__get__(model)) # setto un metodo custom solo all'istanza con nome "Libri" quella get mi serve per richiamare l'istanza correttamente
+
+            setattr(self, table_name, model) 
+
+    def getLibriConAutori(self):
+        _conn = self.db.getConn()
+        with _conn.cursor() as cursor:
+            try:
+                query = """
+                        SELECT L.*, A.nome, A.cognome
+                        FROM Libri AS L
+                        INNER JOIN Produzioni AS P ON L.id = P.idLibro
+                        INNER JOIN Autori AS A ON P.idAutore = A.id;
+
+                        """
+                cursor.execute(query)
+                dati = cursor.fetchall()
+                if not dati:
+                    return ()
+                return dati
+            except Exception as e:
+                print(f"errore con la query {e}")
+                return ()
+
     
     def getConn(self):
         return self.mysql.connection

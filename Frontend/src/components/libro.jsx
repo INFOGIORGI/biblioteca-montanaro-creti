@@ -1,6 +1,6 @@
 
 
-const Libro = ({titolo, data, isbn}) => {
+const Libro = ({titolo, data, isbn, nomeAutore, cognomeAutore}) => {
     return (<>
         <div>
             <ul className="">
@@ -13,6 +13,10 @@ const Libro = ({titolo, data, isbn}) => {
                 <li>
                     {isbn}
                 </li>
+                <li>
+                    {nomeAutore + " " + cognomeAutore} 
+                </li>
+                
             </ul>
         </div>
     </>)
