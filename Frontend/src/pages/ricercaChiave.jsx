@@ -46,7 +46,7 @@ const RicercaChiave = () => {
             placeholder="Fai la ricerca"
           />
 
-          {loading && <p>Caricamento...</p>} {/* Indicatore di caricamento */}
+          {loading && <p>Caricamento...</p>} 
 
           {result.length > 0 ? (
             result.map((book, index) => (
