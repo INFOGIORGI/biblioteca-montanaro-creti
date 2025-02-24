@@ -6,6 +6,7 @@ import LibriForm from './pages/libriForm'
 import Navbar from './components/navbar';
 import RicercaChiave from './pages/ricercaChiave';
 import LibriCat from './pages/libriCat';
+import FormAutori from './pages/formAutori';
 axios.defaults.baseURL = config.API_URL
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path='/aggiungiLibri' element={<LibriForm />}/>
         <Route path='/ricercaLibri' element={<RicercaChiave />}/>
         <Route path='/tuttiLibri' element={<LibriCat />}/>
+        <Route path='/aggiungiAutori' element={<FormAutori />}/>
       </Routes> 
     </Router>
   )

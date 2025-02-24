@@ -43,7 +43,24 @@ def addLibro():
     except Exception as e:
         print(f"errore: {e}")
         return jsonify({"message": "errore"}), 500
+    
+@app.route("/api/addAutore", methods=["POST"])
+def addAutore():
+    data = request.get_json()
+    nome = data.get("nome")
+    cognome = data.get("cognome")
+    dataNascita = data.get("DataNascita")
+    dataMorte = data.get("DataMorte")
+    bio = data.get("bio")
 
+    if not dataMorte:
+        db.Autori.insert(nome=nome, cognome=cognome,DataNascita=dataNascita, bio=bio)
+        return jsonify({"Success":"OK"},200)
+    elif dataMorte:
+        db.Autori.insert(nome=nome, cognome=cognome,DataNascita=dataNascita,dataMorte=dataMorte, bio=bio)
+        return jsonify({"Success":"OK"},200)
+
+    return jsonify({"ERROR": "500"}, 500)
 
 @app.route("/api/ricercaChiave", methods=["POST"])
 def cercaPerChiave():
