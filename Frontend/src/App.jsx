@@ -1,11 +1,12 @@
 import './App.css'
+import config from "../config.json"
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Importiamo gli elementi necessari
 import LibriForm from './pages/libriForm'
 import Navbar from './components/navbar';
 import RicercaChiave from './pages/ricercaChiave';
 import LibriCat from './pages/libriCat';
-axios.defaults.baseURL = "http://127.0.0.1:5000"
+axios.defaults.baseURL = config.API_URL
 
 function App() {
 

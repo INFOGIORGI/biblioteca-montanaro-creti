@@ -60,4 +60,4 @@ def apiLibri():
     dati = db.Libri.getLibriConAutori()
     dict = [{"id": row[0], "ISBN": row[1], "titolo": row[2], "genere": row[3], "dataPub": row[4], "nomeAutore": row[5], "cognomeAutore": row[6]} for row in dati]
     return jsonify(dict if dati else [])
-app.run(debug=True)
+app.run(host="0.0.0.0", port=5000, debug=True)
