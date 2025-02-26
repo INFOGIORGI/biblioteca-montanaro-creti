@@ -42,6 +42,7 @@ class Database:
             model = BaseModel(table_name, self)
             if table_name.lower() == "libri":
                 setattr(model, "getLibriConAutori", self.getLibriConAutori.__get__(model)) # setto un metodo custom solo all'istanza con nome "Libri" quella get mi serve per richiamare l'istanza correttamente
+                setattr(model, "getGeneri", self.getGeneri.__get__(model)) # setto un metodo custom solo all'istanza con nome "Libri" quella get mi serve per richiamare l'istanza correttamente
 
             setattr(self, table_name, model) 
         
@@ -125,6 +126,18 @@ class Database:
             self.thread.join()
             print(f"{self.thread} terminato")
 
+
+    def getGeneri(self):
+        _conn = self.db.getConn()
+        with _conn.cursor() as cursor:
+            try:
+                query = """SELECT DISTINCT genere FROM Libri"""
+                cursor.execute(query)
+                dati = cursor.fetchall()
+                return dati 
+            except Exception as e:
+                print(f"c'e stato un errore con il db {e}")
+                return ()
 
     def getLibriConAutori(self):
         _conn = self.db.getConn()
