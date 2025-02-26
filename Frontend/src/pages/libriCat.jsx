@@ -2,8 +2,28 @@ import Libro from "../components/libro";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const opzioni = ["alfabetico per titolo", "alfabetico per autore", "Genere"]
+
 const LibriCat = () => {
+    const [ordinamento, setOrdinamento] = useState("")
     const [libri, setLibri] = useState([]);
+    const [generi, setGeneri] = useState([])
+
+    const handleChange = (e) => {
+        const value = e.target.value
+        setOrdinamento(value)
+        console.log("ordinamento selezionato: " + value)
+    }
+
+    const prendiGeneri = async () => {
+        try {
+            const response = await axios.get("api/getGeneri");
+            setGeneri(response.data);
+            console.log(response);
+        } catch (errore) {
+            console.error("Errore nel recupero dei Generi:", errore);
+        }
+    }
 
     const prendiLibri = async () => {
         try {
@@ -17,13 +37,25 @@ const LibriCat = () => {
 
     useEffect(() => {
         prendiLibri();
-
+        prendiGeneri();
         const timer = setInterval(prendiLibri, 10000);
         return () => clearInterval(timer);
     }, []);
 
     return (
         <>
+            <form action="" className="mt-5" >
+                <label className="ml-10  border border-black-500 p-2 rounded-md "htmlFor="ord">scegli un ordinamento</label>
+                <select name="ord" id="" onChange={handleChange}>
+                
+                {opzioni.map((value,index) => {
+                    return <option className="ml-3 border" key={index} value={value}>{value}</option>
+                    
+                })}
+
+                </select>
+            </form>
+            
             {libri.length === 0 ? (
                 <p className="text-center text-gray-500 text-2xl mt-5">
                     Nessun Libro disponibile :(
