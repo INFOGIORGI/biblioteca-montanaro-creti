@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "idLibro": 1,
+        "idTessera": 1,
+        "dataInizio": "2025-02-01",
+        "dataFine": "2025-02-15",
+        "restituto": 0
+    }
+]

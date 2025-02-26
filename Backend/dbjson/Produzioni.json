@@ -1,0 +1,46 @@
+[
+    {
+        "idAutore": 1,
+        "idLibro": 1
+    },
+    {
+        "idAutore": 2,
+        "idLibro": 4
+    },
+    {
+        "idAutore": 2,
+        "idLibro": 9
+    },
+    {
+        "idAutore": 2,
+        "idLibro": 10
+    },
+    {
+        "idAutore": 2,
+        "idLibro": 11
+    },
+    {
+        "idAutore": 1,
+        "idLibro": 12
+    },
+    {
+        "idAutore": 1,
+        "idLibro": 13
+    },
+    {
+        "idAutore": 3,
+        "idLibro": 14
+    },
+    {
+        "idAutore": 2,
+        "idLibro": 15
+    },
+    {
+        "idAutore": 2,
+        "idLibro": 16
+    },
+    {
+        "idAutore": 2,
+        "idLibro": 17
+    }
+]
