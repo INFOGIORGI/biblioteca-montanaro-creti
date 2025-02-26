@@ -86,6 +86,7 @@ const LibriCat = () => {
                     <div>
                         <label className="p-2 rounded-md" htmlFor="generi">Seleziona i generi:</label>
                         <select name="generi" className="p-2 border border-gray-400 rounded-md" onChange={handleOrdGenere}>
+                            <option value="‎ ">‎  </option>
                             {generi.map((value, index) => (
                                 <option key={index} value={value.genere}>{value.genere}</option>
                             ))}
