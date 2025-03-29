@@ -18,6 +18,9 @@ def hello() -> str:
 
 @app.route("/api/addLibro", methods = ["POST"])
 def addLibro():
+    if not session.get("isAdmin"):
+        return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
+    
     data = request.get_json()
     isbn = data.get("isbn")
     titolo = data.get("titolo")
@@ -46,6 +49,9 @@ def addLibro():
     
 @app.route("/api/addAutore", methods=["POST"])
 def addAutore():
+    if not session.get("isAdmin"):
+        return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
+
     data = request.get_json()
     nome = data.get("nome")
     cognome = data.get("cognome")
@@ -68,20 +74,23 @@ def cercaPerChiave():
     query = data.get("query")
     dati = db.Libri.searchLike(titolo=query)
 
-    dati_dict = [{"id": row[0], "ISBN": row[1], "titolo": row[2], "genere": row[3], "dataPub": row[4]} for row in dati]
+    for row in dati:
+        dati_dict = {"id": row[0], "ISBN": row[1], "titolo": row[2], "genere": row[3], "dataPub": row[4]}
     print(dati_dict)
     return jsonify(dati_dict if dati else [])
 
 @app.route("/api/Libri", methods=["GET"])
 def apiLibri():
     dati = db.Libri.getLibriConAutori()
-    dict = [{"id": row[0], "ISBN": row[1], "titolo": row[2], "genere": row[3], "dataPub": row[4], "nomeAutore": row[5], "cognomeAutore": row[6]} for row in dati]
+    for row in dati:
+        dict = {"id": row[0], "ISBN": row[1], "titolo": row[2], "genere": row[3], "dataPub": row[4], "nomeAutore": row[5], "cognomeAutore": row[6]}
     return jsonify(dict if dati else [])
 
 @app.route("/api/getGeneri", methods=["GET"])
 def getGeneri():
     dati = db.Libri.getGeneri()
-    json_ret = [{"genere": row[0]} for row in dati]
+    for row in dati:
+        json_ret = {"genere": row[0]}
     return jsonify(json_ret if dati else [])
 
 @app.route("api/register", methods=["POST"])
