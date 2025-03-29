@@ -24,6 +24,9 @@ def hello() -> str:
 
 @app.route("/api/addLibro", methods = ["POST"])
 def addLibro():
+    if not session.get("isAdmin"):
+        return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
+        
     data = request.get_json()
     isbn = data.get("isbn")
     titolo = data.get("titolo")
@@ -52,6 +55,9 @@ def addLibro():
     
 @app.route("/api/addAutore", methods=["POST"])
 def addAutore():
+    if not session.get("isAdmin"):
+        return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
+
     data = request.get_json()
     nome = data.get("nome")
     cognome = data.get("cognome")
