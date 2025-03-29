@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, session
 from _libs.db import Database
 from _libs.utils import *
+from werkzeug.security import check_password_hash, generate_password_hash
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -9,7 +10,7 @@ with app.app_context():
     db = Database(app)
 
 
-
+app.secret_key = "805921396246298444962129118" 
 
 @app.route("/")
 def hello() -> str:
@@ -82,5 +83,33 @@ def getGeneri():
     dati = db.Libri.getGeneri()
     json_ret = [{"genere": row[0]} for row in dati]
     return jsonify(json_ret if dati else [])
+
+@app.route("api/register", methods=["POST"])
+def register():
+    """
+    solo l'admin puó aggiungere gli utenti quindi controlliamo se abbia il token
+    """
+    if not session.get("isAdmin"):
+        return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
+    
+
+    json = request.get_json()
+    user: dict[str, str] = {}
+    user["name"] = json.get("name")
+    user["surname"] = json.get("surname")
+    user["password"] = json.get("password")
+    user["pswdConf"] = json.get("pswdConf")
+    user["isAdmin"] = False
+
+    if user["password"] is not user["pswdConf"] or isEmpty(list(user.values())):
+        return jsonify({"error": "c'é un problema con i dati"})
+
+    user["password"] = generate_password_hash(user["password"])
+    user.pop("pswdConf")
+
+    if db.Utenti.insert(nome=user["name"], cognome=user["surname"], password=user["password"]) == True:
+        return jsonify({"SUCCESSO":"OK"}, 200)
+
+
 
 app.run(host="0.0.0.0", port=5000, debug=True)
