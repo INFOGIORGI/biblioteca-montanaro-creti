@@ -7,7 +7,9 @@ import Navbar from './components/navbar';
 import RicercaChiave from './pages/ricercaChiave';
 import LibriCat from './pages/libriCat';
 import FormAutori from './pages/formAutori';
+import Register from './pages/register';
 axios.defaults.baseURL = config.API_URL
+axios.defaults.withCredentials = true; // Permette di gestire i cookie
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
         <Route path='/ricercaLibri' element={<RicercaChiave />}/>
         <Route path='/tuttiLibri' element={<LibriCat />}/>
         <Route path='/aggiungiAutori' element={<FormAutori />}/>
+        <Route path='/register' element={<Register />}/>
       </Routes> 
     </Router>
   )

@@ -1,11 +1,17 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, session
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, session, make_response
 from _libs.db import Database
 from _libs.utils import *
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+app.config["SESSION_TYPE"] = "filesystem"  # Memorizza le sessioni sul disco
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_USE_SIGNER"] = True
+app.config["SESSION_KEY_PREFIX"] = "myapp_"
+
+#session(app)  # Inizializza Flask-Session
+CORS(app, supports_credentials=True)
 with app.app_context():  
     db = Database(app)
 
@@ -84,7 +90,7 @@ def getGeneri():
     json_ret = [{"genere": row[0]} for row in dati]
     return jsonify(json_ret if dati else [])
 
-@app.route("api/register", methods=["POST"])
+@app.route("/api/register", methods=["POST"])
 def register():
     """
     solo l'admin puó aggiungere gli utenti quindi controlliamo se abbia il token
@@ -102,7 +108,7 @@ def register():
     user["isAdmin"] = False
 
     if user["password"] is not user["pswdConf"] or isEmpty(list(user.values())):
-        return jsonify({"error": "c'é un problema con i dati"})
+        return jsonify({"error": True})
 
     user["password"] = generate_password_hash(user["password"])
     user.pop("pswdConf")
@@ -110,6 +116,19 @@ def register():
     if db.Utenti.insert(nome=user["name"], cognome=user["surname"], password=user["password"]) == True:
         return jsonify({"SUCCESSO":"OK"}, 200)
 
+@app.route("/api/verifyAdmin", methods=["GET"])
+def verifyAdmin():
+    if session.get("isAdmin"):
+        return jsonify({"admin": True})
+    
+    return jsonify({"admin": "False"})
 
+@app.route("/api/getCookie",methods=["GET"])
+def getCookieAdmin():
+    
+    token = session.get("token", "default_token")  # Usa un valore di default se il token non è impostato
+    response = make_response(jsonify({"message": "Cookie impostato"}))
+    response.set_cookie("token", token, httponly=True, samesite="Lax")
+    return response
 
 app.run(host="0.0.0.0", port=5000, debug=True)
