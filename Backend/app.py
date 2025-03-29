@@ -1,6 +1,5 @@
 from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
 from _libs.db import Database
-from _libs.models import *
 from _libs.utils import *
 from flask_cors import CORS
 

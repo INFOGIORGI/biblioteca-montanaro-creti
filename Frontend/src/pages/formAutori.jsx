@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const FormAutori = () => {
 
-    const [state, setState] = useState({
+    const [state, setState] = useState({ // valori default
         nome: '',
         cognome: '',
         DataNascita: '',
@@ -11,8 +11,8 @@ const FormAutori = () => {
         bio: ''
     })
 
-    const handleTextInput = (e) => {
-        const [name, value] = [e.target.name, e.target.value];
+    const handleTextInput = (e) => { // dato che sono tutti testuali faccio un handle generico
+        const [name, value] = [e.target.name, e.target.value]; // name del tag deve corrispondere a ció che viene passato
 
         setState(prev => ({
             ...prev,
