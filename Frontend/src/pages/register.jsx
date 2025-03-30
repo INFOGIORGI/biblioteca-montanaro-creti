@@ -35,7 +35,7 @@ const Register = () => {
         try {
             const response = await axios.post("/api/register", state);
             console.log(response.data)
-            alert("Utente aggiunto!");
+            alert(`"Utente aggiunto! ${state.name}"`);
         } catch (error) {
             alert("Errore nell'inserimento dei dati");
             console.log(response.data)
@@ -45,11 +45,11 @@ const Register = () => {
 
     const verifyAdmin = async () => {
         try {
-            const response = await axios.post("/api/verifyAdmin", {
-                "session": getCookie()  // Include i cookie nella richiesta
+            const response = await axios.post("/api/isAdmin", {}, {
+                withCredentials: true // Include i cookie nella richiesta
             });
-            console.log(response.data.admin);
-            console.log(getCookie())
+            console.log(response.data.isAdmin);
+            
             //console.log("Cookie attuali:", document.cookie);
             setIsAdmin(true);  // Assicurati che `response.data.admin` contenga il valore corretto
         } catch (error) {

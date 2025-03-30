@@ -11,6 +11,9 @@ app.config["SESSION_PERMANENT"] = False
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config["SESSION_USE_SIGNER"] = True
 app.config["SESSION_KEY_PREFIX"] = "myapp_"
+#app.config["SESSION_COOKIE_SAMESITE"] = "None"
+#app.config["SESSION_COOKIE_SECURE"] = False  # False solo per test in localhost
+
 
 #session(app)  # Inizializza Flask-Session
 CORS(app, supports_credentials=True)
@@ -144,25 +147,25 @@ def login():
     idTessera = json.get("idTessera")
     email = json.get("email")
     password = json.get("password")
+    
 
+    print(idTessera)
     # Verifica se l'ID tessera è presente nel database
-    user_by_id = db.Tessere.getById(idTessera)  # Supponiamo che db.Tessere.getById ritorni una lista
+    user_by_id = db.Tessere.getById(idTessera=idTessera)  # Supponiamo che db.Tessere.getById ritorni una lista
+    print(user_by_id[0][1], email)
+    
     if user_by_id:
         # Confronta la password con quella memorizzata
-        if not check_password_hash(user_by_id[0][2], password):  # La password è nella posizione 2
-            return jsonify({"error": "Password errata"}), 400
+        if not check_password_hash(user_by_id[0][2], password) or user_by_id[0][1] != email:  # La password è nella posizione 2
+            return jsonify({"error": "credenziali non valide"}), 400
         # Login riuscito
         return jsonify({"message": "Login effettuato con successo", "idTessera": user_by_id[0][0]}), 200
 
-    # Verifica se l'email è presente nel database
-    user_by_email = db.Tessere.getByEmail(email)  # Supponiamo che db.Tessere.getByEmail ritorni una lista
-    if user_by_email:
-        # Confronta la password con quella memorizzata
-        if not check_password_hash(user_by_email[0][2], password):  # La password è nella posizione 2
-            return jsonify({"error": "Password errata"}), 400
-        # Login riuscito
-        return jsonify({"message": "Login effettuato con successo", "idTessera": user_by_email[0][0]}), 200
+    
+    
 
     return jsonify({"error": "Utente non trovato"}), 404
+
+
 
 app.run(host="0.0.0.0", port=5000, debug=True)

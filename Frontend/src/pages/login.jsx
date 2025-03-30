@@ -3,7 +3,7 @@ import axios from "axios";
 
 const Login = () => {
     const [state, setState] = useState({
-        numTessera: "",
+        idTessera: "",
         name: '',
         surname: '',
         password: '',
@@ -33,38 +33,20 @@ const Login = () => {
         e.preventDefault(); // Evita il refresh della pagina
 
         try {
-            const response = await axios.post("/api/register", state);
-            alert("Utente aggiunto!");
+            const response = await axios.post("/api/login", state);
+            alert(`"loggato! ${state.name}"`);
         } catch (error) {
-            alert("Errore nell'inserimento dei dati");
+            alert("non loggato");
             console.error(error);
         }
     };
 
-    const verifyAdmin = async () => {
-        try {
-            const response = await axios.post("/api/verifyAdmin", {
-                "session": getCookie()  // Include i cookie nella richiesta
-            });
-            console.log(response.data.admin);
-            console.log(getCookie())
-            //console.log("Cookie attuali:", document.cookie);
-            setIsAdmin(true);  // Assicurati che `response.data.admin` contenga il valore corretto
-        } catch (error) {
-            console.error("Errore nel recupero dello stato admin:", error);
-            setIsAdmin(true);
-        }
-    };
+    
 
-    useEffect(() => {
-        verifyAdmin();
-    }, []);
-
+  
     return (
         <div className="max-w-md mx-auto mt-10 p-4 border">
-            {!isAdmin ? (
-                <p className="text-red-500 text-center">Non sei admin</p>
-            ) : (
+            
                 <>
                     <h1 className="text-4xl text-center mb-6">Login</h1>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -73,9 +55,9 @@ const Login = () => {
                         <input 
                             type="text" 
                             className="p-3 bg-gray-200 border" 
-                            name="numTessera" 
+                            name="idTessera" 
                             placeholder="Nome" 
-                            value={state.numTessera} 
+                            value={state.idTessera} 
                             onChange={handleTextInput} 
                             required
                         />
@@ -134,7 +116,7 @@ const Login = () => {
                         </button>
                     </form>
                 </>
-            )}
+            
         </div>
     );
 };
