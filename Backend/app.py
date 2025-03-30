@@ -115,13 +115,15 @@ def register():
     user["name"] = json.get("name")
     user["surname"] = json.get("surname")
     user["password"] = json.get("password")
+    user["confirm_password"] = json.get("confirm_password")
     user["telefono"] = json.get("telefono")
     user["email"] = json.get("email")
 
     print(user)
     
 
-   
+    if user["password"] != user["confirm_password"]:
+        return jsonify({"error": "Le password non coincidono"}, 400)
 
     user["password"] = generate_password_hash(user["password"])
     
@@ -134,5 +136,33 @@ def register():
     
     return jsonify({"error": "Problema con i parametri"}, 400)
 
+@app.route("/api/login", methods=["POST"])
+def login():
+
+    json = request.get_json()
+    
+    idTessera = json.get("idTessera")
+    email = json.get("email")
+    password = json.get("password")
+
+    # Verifica se l'ID tessera è presente nel database
+    user_by_id = db.Tessere.getById(idTessera)  # Supponiamo che db.Tessere.getById ritorni una lista
+    if user_by_id:
+        # Confronta la password con quella memorizzata
+        if not check_password_hash(user_by_id[0][2], password):  # La password è nella posizione 2
+            return jsonify({"error": "Password errata"}), 400
+        # Login riuscito
+        return jsonify({"message": "Login effettuato con successo", "idTessera": user_by_id[0][0]}), 200
+
+    # Verifica se l'email è presente nel database
+    user_by_email = db.Tessere.getByEmail(email)  # Supponiamo che db.Tessere.getByEmail ritorni una lista
+    if user_by_email:
+        # Confronta la password con quella memorizzata
+        if not check_password_hash(user_by_email[0][2], password):  # La password è nella posizione 2
+            return jsonify({"error": "Password errata"}), 400
+        # Login riuscito
+        return jsonify({"message": "Login effettuato con successo", "idTessera": user_by_email[0][0]}), 200
+
+    return jsonify({"error": "Utente non trovato"}), 404
 
 app.run(host="0.0.0.0", port=5000, debug=True)

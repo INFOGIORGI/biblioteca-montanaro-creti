@@ -6,6 +6,7 @@ const Register = () => {
         name: '',
         surname: '',
         password: '',
+        confirm_password: '',
         telefono: '',
         email: ''
     });
@@ -91,44 +92,53 @@ const Register = () => {
                             required
                         />
 
-                        <label className="text-center font-semibold">telefono:</label>
+                        <label className="text-center font-semibold">Telefono:</label>
                         <input 
                             type="text" 
                             className="p-3 bg-gray-200 border" 
                             name="telefono" 
+                            placeholder="Telefono" 
                             value={state.telefono} 
                             onChange={handleTextInput} 
                             required
                         />
                         
-                        <label className="text-center font-semibold">email:</label>
+                        <label className="text-center font-semibold">Email:</label>
                         <input 
                             type="text" 
                             className="p-3 bg-gray-200 border" 
                             name="email" 
-                            placeholder="Nome" 
+                            placeholder="Email" 
                             value={state.email} 
                             onChange={handleTextInput} 
                             required
                         />
 
-                        <label className="text-center font-semibold">password:</label>
+                        <label className="text-center font-semibold">Password:</label>
                         <input 
                             type="password" 
                             className="p-3 bg-gray-200 border" 
                             name="password" 
-                            placeholder="Nome" 
+                            placeholder="Password" 
                             value={state.password} 
                             onChange={handleTextInput} 
                             required
                         />
 
-                        
-
+                        <label className="text-center font-semibold">Conferma password:</label>
+                        <input 
+                            type="password" 
+                            className="p-3 bg-gray-200 border" 
+                            name="confirm_password" 
+                            placeholder="Conferma password" 
+                            value={state.confirm_password} 
+                            onChange={handleTextInput} 
+                            required
+                        />
 
                         
                         <button className="bg-gray-500 text-white py-3 hover:bg-green-500 transition">
-                            registra un utente
+                            Registra untente
                         </button>
                     </form>
                 </>

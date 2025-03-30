@@ -130,7 +130,7 @@ const Login = () => {
 
                         
                         <button className="bg-gray-500 text-white py-3 hover:bg-green-500 transition">
-                            registra un utente
+                            Effettua Login
                         </button>
                     </form>
                 </>

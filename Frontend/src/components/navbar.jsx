@@ -62,7 +62,28 @@ const Navbar = () => {
                     Aggiungi un autore
                   </NavLink>
                 </li>
-                
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/register"
+                  >
+                    Register
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/login"
+                  >
+                    Login
+                  </NavLink>
+                </li>
               </ul>
             </div>
           </div>
