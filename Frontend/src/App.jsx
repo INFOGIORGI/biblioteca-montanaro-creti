@@ -8,6 +8,7 @@ import RicercaChiave from './pages/ricercaChiave';
 import LibriCat from './pages/libriCat';
 import FormAutori from './pages/formAutori';
 import Register from './pages/register';
+import Login from './pages/login';
 axios.defaults.baseURL = config.API_URL
 axios.defaults.withCredentials = true; // Permette di gestire i cookie
 
@@ -24,6 +25,7 @@ function App() {
         <Route path='/tuttiLibri' element={<LibriCat />}/>
         <Route path='/aggiungiAutori' element={<FormAutori />}/>
         <Route path='/register' element={<Register />}/>
+        <Route path='/login' element={<Login />}/>
       </Routes> 
     </Router>
   )

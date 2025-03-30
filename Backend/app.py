@@ -1,12 +1,14 @@
 from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, session, make_response
 from _libs.db import Database
 from _libs.utils import *
+import random
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_cors import CORS
 
 app = Flask(__name__)
 app.config["SESSION_TYPE"] = "filesystem"  # Memorizza le sessioni sul disco
 app.config["SESSION_PERMANENT"] = False
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config["SESSION_USE_SIGNER"] = True
 app.config["SESSION_KEY_PREFIX"] = "myapp_"
 
@@ -101,40 +103,36 @@ def register():
     """
     solo l'admin puó aggiungere gli utenti quindi controlliamo se abbia il token
     """
+
+    """
     if not session.get("isAdmin"):
         return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
-    
+    """
 
     json = request.get_json()
     user: dict[str, str] = {}
+    user["idTessera"] = numeri_casuali = ''.join(random.choices('0123456789', k=16))
     user["name"] = json.get("name")
     user["surname"] = json.get("surname")
     user["password"] = json.get("password")
-    user["pswdConf"] = json.get("pswdConf")
-    user["isAdmin"] = False
+    user["telefono"] = json.get("telefono")
+    user["email"] = json.get("email")
 
-    if user["password"] is not user["pswdConf"] or isEmpty(list(user.values())):
-        return jsonify({"error": True})
+    print(user)
+    
+
+   
 
     user["password"] = generate_password_hash(user["password"])
-    user.pop("pswdConf")
+    
+    if not db.Tessere.insert(idTessera=user["idTessera"],email=user["email"], password=user["password"], tel=user["telefono"]):
+        return jsonify({"error": "Problema con i parametri tessera"}, 400)
 
-    if db.Utenti.insert(nome=user["name"], cognome=user["surname"], password=user["password"]) == True:
+    if db.Utenti.insert(idTessera=user["idTessera"],nome=user["name"], cognome=user["surname"]) == True:
         return jsonify({"SUCCESSO":"OK"}, 200)
-
-@app.route("/api/verifyAdmin", methods=["GET"])
-def verifyAdmin():
-    if session.get("isAdmin"):
-        return jsonify({"admin": True})
     
-    return jsonify({"admin": "False"})
-
-@app.route("/api/getCookie",methods=["GET"])
-def getCookieAdmin():
     
-    token = session.get("token", "default_token")  # Usa un valore di default se il token non è impostato
-    response = make_response(jsonify({"message": "Cookie impostato"}))
-    response.set_cookie("token", token, httponly=True, samesite="Lax")
-    return response
+    return jsonify({"error": "Problema con i parametri"}, 400)
+
 
 app.run(host="0.0.0.0", port=5000, debug=True)

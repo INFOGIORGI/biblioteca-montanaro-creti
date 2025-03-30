@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Register = () => {
+const Login = () => {
     const [state, setState] = useState({
+        numTessera: "",
         name: '',
         surname: '',
         password: '',
@@ -33,11 +34,9 @@ const Register = () => {
 
         try {
             const response = await axios.post("/api/register", state);
-            console.log(response.data)
             alert("Utente aggiunto!");
         } catch (error) {
             alert("Errore nell'inserimento dei dati");
-            console.log(response.data)
             console.error(error);
         }
     };
@@ -67,8 +66,19 @@ const Register = () => {
                 <p className="text-red-500 text-center">Non sei admin</p>
             ) : (
                 <>
-                    <h1 className="text-4xl text-center mb-6">Registra un utente</h1>
+                    <h1 className="text-4xl text-center mb-6">Login</h1>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+
+                    <label className="text-center font-semibold">Numero della tessera:</label>
+                        <input 
+                            type="text" 
+                            className="p-3 bg-gray-200 border" 
+                            name="numTessera" 
+                            placeholder="Nome" 
+                            value={state.numTessera} 
+                            onChange={handleTextInput} 
+                            required
+                        />
                         <label className="text-center font-semibold">Nome:</label>
                         <input 
                             type="text" 
@@ -91,15 +101,7 @@ const Register = () => {
                             required
                         />
 
-                        <label className="text-center font-semibold">telefono:</label>
-                        <input 
-                            type="text" 
-                            className="p-3 bg-gray-200 border" 
-                            name="telefono" 
-                            value={state.telefono} 
-                            onChange={handleTextInput} 
-                            required
-                        />
+                     
                         
                         <label className="text-center font-semibold">email:</label>
                         <input 
@@ -137,4 +139,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;
