@@ -84,6 +84,17 @@ const Navbar = () => {
                     Login
                   </NavLink>
                 </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/catalogo"
+                  >
+                    Sfoglia il catalogo
+                  </NavLink>
+                </li>
               </ul>
             </div>
           </div>
@@ -164,6 +175,40 @@ const Navbar = () => {
                     to="/aggiungiAutori"
                   >
                     Aggiungi un autore
+                  </NavLink>
+                </li>
+
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/register"
+                  >
+                    Register
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/login"
+                  >
+                    Login
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/catalogo"
+                  >
+                    Sfoglia il catalogo
                   </NavLink>
                 </li>
                 

@@ -43,8 +43,10 @@ def addLibro():
             return jsonify({"message": "errore"}), 400
 
         db.Libri.insert(ISBN=isbn, titolo=titolo, genere=genere, dataPub=anno)
-
+        
         libroId = db.Libri.getById(titolo=titolo)
+        print(libroId[0][3])
+        db.Catalogo.insert(idLibro=libroId[0][0],indice=0,sezione=libroId[0][3], disponibile=True)
 
         
         
@@ -161,6 +163,21 @@ def login():
     
 
     return jsonify({"error": "Utente non trovato"}), 404
+
+@app.route("/api/prestito")
+def prestito():
+    json = request.get_json()
+    idLibro = json.get("idLibro")
+    idTessera = json.get("idTessera")
+    dataInizio = json.get("dataInizio")
+
+    db.Catalogo()
+    
+@app.route("/api/Catalogo", methods=["GET"])
+def catalogo():
+    dati = db.Catalogo.getCatalogo()
+    dict = [{"titolo": row[0], "genere": row[1], "disponibile": row[2]} for row in dati]
+    return jsonify(dict if dati else []), 200
 
 
 

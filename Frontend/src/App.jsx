@@ -10,6 +10,8 @@ import FormAutori from './pages/formAutori';
 import Register from './pages/register';
 import Login from './pages/login';
 import Landing from './pages/landing';
+import Catalogo from './pages/catalogo';
+
 axios.defaults.baseURL = config.API_URL
 //axios.defaults.withCredentials = true; // Permette di gestire i cookie
 
@@ -21,7 +23,9 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
+      <Route path='/catalogo' element={<Catalogo />}/>
         <Route path='/' element={<Landing />}/>
+        
         <Route path='/aggiungiLibri' element={<LibriForm />}/>
         <Route path='/ricercaLibri' element={<RicercaChiave />}/>
         <Route path='/tuttiLibri' element={<LibriCat />}/>
