@@ -24,7 +24,7 @@ const Navbar = () => {
                     end
                     to="/aggiungiLibri"
                   >
-                    Home
+                    Aggiungi un libro
                   </NavLink>
                 </li>
 
@@ -51,7 +51,50 @@ const Navbar = () => {
                     Vedi tutti i libri
                   </NavLink>
                 </li>
-                
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/aggiungiAutori"
+                  >
+                    Aggiungi un autore
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/register"
+                  >
+                    Register
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/login"
+                  >
+                    Login
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/catalogo"
+                  >
+                    Sfoglia il catalogo
+                  </NavLink>
+                </li>
               </ul>
             </div>
           </div>
@@ -88,18 +131,87 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden">
           <ul className="flex flex-col items-center gap-4 p-4 font-dinpro font-bold  ">
-            <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? 'text-black' : ''
-                }
-                end
-                to="/aggiungiLibri"
-                onClick={toggleMenu}
-              >
-                aggiungi Libri
-              </NavLink>
-            </li>
+          <li>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/aggiungiLibri"
+                  >
+                    Aggiungi un libro
+                  </NavLink>
+                </li>
+
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/ricercaLibri"
+                  >
+                    Ricerca Libri
+                  </NavLink>
+                </li>
+
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/tuttiLibri"
+                  >
+                    Vedi tutti i libri
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/aggiungiAutori"
+                  >
+                    Aggiungi un autore
+                  </NavLink>
+                </li>
+
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/register"
+                  >
+                    Register
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/login"
+                  >
+                    Login
+                  </NavLink>
+                </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/catalogo"
+                  >
+                    Sfoglia il catalogo
+                  </NavLink>
+                </li>
+                
            
           </ul>
         </div>

@@ -1,12 +1,13 @@
 from flask_mysqldb import MySQL
-import os
 from typing import TYPE_CHECKING
 import re
+from datetime import date, datetime
 
 
 class Database:
     def __init__(self, app ):
         
+        #db var
         self.app = app
         self.app.config['MYSQL_HOST'] = "138.41.20.102"
         self.app.config['MYSQL_USER'] = "5di"
@@ -19,22 +20,90 @@ class Database:
         conn = self.mysql.connection
         cursor = conn.cursor()
         cursor.execute("SHOW TABLES")
-        tables = cursor.fetchall()
+        self.tables = cursor.fetchall()
         cursor.close()
 
         
 
+      
+
+    
+
+        
+
         # Creazione dinamica dei modelli per ogni tabella
-        for (table_name,) in tables:
+        for (table_name,) in self.tables:
+            """
+            creo degli attributi tanti quanti sono le tabelle nel db con lo stesso nome
+            aventi come attributi table_name
+
+            """
             print(f"tabella trovata: {table_name}")
 
             model = BaseModel(table_name, self)
             if table_name.lower() == "libri":
                 setattr(model, "getLibriConAutori", self.getLibriConAutori.__get__(model)) # setto un metodo custom solo all'istanza con nome "Libri" quella get mi serve per richiamare l'istanza correttamente
+                setattr(model, "getGeneri", self.getGeneri.__get__(model)) # setto un metodo custom solo all'istanza con nome "Libri" quella get mi serve per richiamare l'istanza correttamente
 
+            if table_name.lower() == "catalogo":
+                setattr(model, "getCatalogo", self.getCatalogo.__get__(model))
             setattr(self, table_name, model) 
+        
+        
+    
+    def getCatalogo(self, **id):
+        
+
+        _conn = self.db.getConn()
+        with _conn.cursor() as cursor:
+            try:
+                query = """SELECT titolo, genere, C.disponibile from Libri as L
+                            INNER JOIN Catalogo as C ON L.id = C.idLibro
+                            """
+                cursor.execute(query)
+                dati = cursor.fetchall()
+                return dati 
+            except Exception as e:
+                print(f"c'e stato un errore con il db {e}")
+                return ()
+
+
+    def converti_dati(self, dati, column_names):
+        """
+        praticamente converti valore mi controlla se quel valore é un istanza di date o datetime 
+        e se lo é me la converte in un formato testuale leggibile con la notazione ISO
+        obv gli passo tutta la tupla e solo se trova un valore con il formata data agisce e solo
+        su quel valore
+
+        
+        """
+        def converti_valore(val):
+            if isinstance(val, (date, datetime)):
+                return val.isoformat()
+            return val
+        return [{column: converti_valore(value) for column, value in zip(column_names, row)} for row in dati]
+
+    
+
+
+    def getGeneri(self):
+        _conn = self.db.getConn()
+        with _conn.cursor() as cursor:
+            try:
+                query = """SELECT DISTINCT genere FROM Libri"""
+                cursor.execute(query)
+                dati = cursor.fetchall()
+                return dati 
+            except Exception as e:
+                print(f"c'e stato un errore con il db {e}")
+                return ()
 
     def getLibriConAutori(self):
+        """
+        faccio una join con libri produzioni e autori verificando se l'id del libro é uguale a quello in prod
+        cosí collego autori dove produzioni.idAutore = autore.id
+        avendo cosí una tupla che mi fa ritornare tutto libro + autore nome e cognome 
+        """
         _conn = self.db.getConn()
         with _conn.cursor() as cursor:
             try:
@@ -104,10 +173,14 @@ class BaseModel:
             return ()
         
     def insert(self, **attr) -> bool:
+        """
+        una insert che inserisce dinamicamente le colonne in base ai parametri della funzione
+
+        """
         try:
             conn = self.db.getConn()
             with conn.cursor() as cursor:
-                colonne = ', '.join(attr.keys())
+                colonne = ', '.join(attr.keys()) # prende i parametri e li mette qui staccandoli da una ,
                 values = ', '.join(["%s"] *len(attr)) # metto i %s
                 query = f"INSERT INTO {self.table_name} ({colonne}) VALUES ({values})"
                
@@ -132,6 +205,9 @@ class BaseModel:
             return False 
         
     def update(self, **attr) -> bool:
+        """
+        funziona come la insert peró uso una regex per staccare parametri da valori e per cercare le keyword
+        """
         try:
             conn = self.db.getConn()
             with conn.cursor() as cursor:
@@ -142,9 +218,9 @@ class BaseModel:
                 for colonna in attr.keys():
                     query += f"{colonna} = %s, "
                 
-                query = query[:-2]
+                query = query[:-2] # levo la virgola
 
-                if condition:
+                if condition: # controllo se c'é un where
                     operators = r"(\w+)\s*(=|!=|<|>|<=|>=|LIKE|IN)\s*(.+)" #espressione regolare che mi verifica se ci sono almeno un operatore
                     #per vedere se l'espressione é valida (\w) colonna e (.+) parametri
                     #query += f" WHERE {condition}"
@@ -164,6 +240,10 @@ class BaseModel:
             return False
     
     def searchLike(self, **attr) -> tuple[tuple]:
+        """
+        cerco in una tabella per un solo attributo per fare una ricerca parziale
+        ES: SELECT * FROM libri WHERE keyword[0] LIKE <stringa_parziale>
+        """
         try:
             values = list(attr.values())  # Converti in lista per indicizzare
             keyword = list(attr.keys())  # Converti in lista per indicizzare
