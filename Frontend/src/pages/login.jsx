@@ -61,29 +61,8 @@ const Login = () => {
                             onChange={handleTextInput} 
                             required
                         />
-                        <label className="text-center font-semibold">Nome:</label>
-                        <input 
-                            type="text" 
-                            className="p-3 bg-gray-200 border" 
-                            name="name" 
-                            placeholder="Nome" 
-                            value={state.name} 
-                            onChange={handleTextInput} 
-                            required
-                        />
+                        
 
-                        <label className="text-center font-semibold">Cognome:</label>
-                        <input 
-                            type="text" 
-                            className="p-3 bg-gray-200 border" 
-                            name="surname" 
-                            placeholder="Cognome" 
-                            value={state.surname} 
-                            onChange={handleTextInput} 
-                            required
-                        />
-
-                     
                         
                         <label className="text-center font-semibold">email:</label>
                         <input 

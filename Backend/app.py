@@ -68,12 +68,12 @@ def addAutore():
 
     if not dataMorte:
         db.Autori.insert(nome=nome, cognome=cognome,DataNascita=dataNascita, bio=bio)
-        return jsonify({"Success":"OK"},200)
+        return jsonify({"Success":"OK"}), 200
     elif dataMorte:
         db.Autori.insert(nome=nome, cognome=cognome,DataNascita=dataNascita,dataMorte=dataMorte, bio=bio)
-        return jsonify({"Success":"OK"},200)
+        return jsonify({"Success":"OK"}), 200
 
-    return jsonify({"ERROR": "500"}, 500)
+    return jsonify({"ERROR": "500"}), 500
 
 @app.route("/api/ricercaChiave", methods=["POST"])
 def cercaPerChiave():
@@ -122,18 +122,18 @@ def register():
     
 
     if user["password"] != user["confirm_password"]:
-        return jsonify({"error": "Le password non coincidono"}, 400)
+        return jsonify({"error": "Le password non coincidono"}), 400
 
     user["password"] = generate_password_hash(user["password"])
     
     if not db.Tessere.insert(idTessera=user["idTessera"],email=user["email"], password=user["password"], tel=user["telefono"]):
-        return jsonify({"error": "Problema con i parametri tessera"}, 400)
+        return jsonify({"error": "Problema con i parametri tessera"}), 400
 
     if db.Utenti.insert(idTessera=user["idTessera"],nome=user["name"], cognome=user["surname"]) == True:
         return jsonify({"SUCCESSO":"OK"}, 200)
     
     
-    return jsonify({"error": "Problema con i parametri"}, 400)
+    return jsonify({"error": "Problema con i parametri"}), 400
 
 @app.route("/api/login", methods=["POST"])
 def login():
