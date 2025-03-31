@@ -1,19 +1,15 @@
 from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, session, make_response
 from _libs.db import Database
-from _libs.utils import *
 import random
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_cors import CORS
 
 app = Flask(__name__)
-app.config["SESSION_TYPE"] = "filesystem"  # Memorizza le sessioni sul disco
-app.config["SESSION_PERMANENT"] = False
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config["SESSION_USE_SIGNER"] = True
-app.config["SESSION_KEY_PREFIX"] = "myapp_"
-#app.config["SESSION_COOKIE_SAMESITE"] = "None"
-#app.config["SESSION_COOKIE_SECURE"] = False  # False solo per test in localhost
-
+#app.config["SESSION_TYPE"] = "filesystem"  # Memorizza le sessioni sul disco
+#app.config["SESSION_PERMANENT"] = False
+#app.config['SESSION_COOKIE_HTTPONLY'] = True
+#app.config["SESSION_USE_SIGNER"] = True
+#app.config["SESSION_KEY_PREFIX"] = "myapp_"
 
 #session(app)  # Inizializza Flask-Session
 CORS(app, supports_credentials=True)
@@ -29,8 +25,8 @@ def hello() -> str:
 
 @app.route("/api/addLibro", methods = ["POST"])
 def addLibro():
-    if not session.get("isAdmin"):
-        return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
+    #if not session.get("isAdmin"):
+    #    return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
         
     data = request.get_json()
     isbn = data.get("isbn")
@@ -60,8 +56,8 @@ def addLibro():
     
 @app.route("/api/addAutore", methods=["POST"])
 def addAutore():
-    if not session.get("isAdmin"):
-        return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
+    #if not session.get("isAdmin"):
+    #    return jsonify({"ERROR": "ACCESSO NEGATO"}, 403)
 
     data = request.get_json()
     nome = data.get("nome")
