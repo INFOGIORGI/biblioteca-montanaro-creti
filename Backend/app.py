@@ -132,7 +132,7 @@ def register():
         return jsonify({"error": "Problema con i parametri tessera"}), 400
 
     if db.Utenti.insert(idTessera=user["idTessera"],nome=user["name"], cognome=user["surname"]) == True:
-        return jsonify({"SUCCESSO":"OK"}, 200)
+        return jsonify({"SUCCESSO":"OK"}), 200
     
     
     return jsonify({"error": "Problema con i parametri"}), 400
