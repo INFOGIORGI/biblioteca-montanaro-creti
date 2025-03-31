@@ -35,7 +35,7 @@ const Register = () => {
         try {
             const response = await axios.post("/api/register", state);
             console.log(response.data)
-            alert(`"Utente aggiunto! ${state.name}"`);
+            alert(`"Utente aggiunto! ${state.name} ${state.surname}"`);
         } catch (error) {
             alert("Errore nell'inserimento dei dati");
             console.log(response.data)

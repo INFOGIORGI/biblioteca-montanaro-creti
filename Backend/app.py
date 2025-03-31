@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, session, make_response
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
 from _libs.db import Database
 import random
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -12,7 +12,7 @@ app = Flask(__name__)
 #app.config["SESSION_KEY_PREFIX"] = "myapp_"
 
 #session(app)  # Inizializza Flask-Session
-CORS(app, supports_credentials=True)
+CORS(app)
 with app.app_context():  
     db = Database(app)
 
@@ -89,7 +89,7 @@ def cercaPerChiave():
 def apiLibri():
     dati = db.Libri.getLibriConAutori()
     dict = [{"id": row[0], "ISBN": row[1], "titolo": row[2], "genere": row[3], "dataPub": row[4], "nomeAutore": row[5], "cognomeAutore": row[6]} for row in dati]
-    return jsonify(dict if dati else [])
+    return jsonify(dict if dati else []), 200
 
 @app.route("/api/getGeneri", methods=["GET"])
 def getGeneri():
