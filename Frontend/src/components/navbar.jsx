@@ -95,6 +95,17 @@ const Navbar = () => {
                     Sfoglia il catalogo
                   </NavLink>
                 </li>
+                <li>
+                <NavLink
+                    className={({ isActive }) =>
+                      isActive ? 'text-black' : ''
+                    }
+                    end
+                    to="/prestiti"
+                  >
+                    Sfoglia i prestiti
+                  </NavLink>
+                </li>
               </ul>
             </div>
           </div>

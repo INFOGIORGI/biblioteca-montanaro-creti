@@ -33,7 +33,9 @@ const Login = () => {
         e.preventDefault(); // Evita il refresh della pagina
 
         try {
-            const response = await axios.post("/api/login", state);
+            const response = await axios.post("/api/login", state, {
+                withCredentials: true
+            });
             alert(`"loggato! ${state.name}"`);
         } catch (error) {
             alert("non loggato");

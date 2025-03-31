@@ -1,8 +1,10 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify, session
 from _libs.db import Database
 import random
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_cors import CORS
+from flask_session import Session
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 #app.config["SESSION_TYPE"] = "filesystem"  # Memorizza le sessioni sul disco
@@ -11,13 +13,16 @@ app = Flask(__name__)
 #app.config["SESSION_USE_SIGNER"] = True
 #app.config["SESSION_KEY_PREFIX"] = "myapp_"
 
+
 #session(app)  # Inizializza Flask-Session
-CORS(app)
+CORS(app, supports_credentials=True)
+bcrypt = Bcrypt()
 with app.app_context():  
     db = Database(app)
 
 
 app.secret_key = "805921396246298444962129118" 
+server_session = Session(app)
 
 @app.route("/")
 def hello() -> str:
@@ -157,6 +162,9 @@ def login():
         if not check_password_hash(user_by_id[0][2], password) or user_by_id[0][1] != email:  # La password è nella posizione 2
             return jsonify({"error": "credenziali non valide"}), 400
         # Login riuscito
+        session["id"] = user_by_id[0][0]
+        session["isAdmin"] = user_by_id[0][4]
+        
         return jsonify({"message": "Login effettuato con successo", "idTessera": user_by_id[0][0]}), 200
 
     
@@ -172,6 +180,13 @@ def prestito():
     dataInizio = json.get("dataInizio")
 
     db.Catalogo()
+
+@app.route("/api/getPrestiti", methods=["GET"])
+def getPrestiti():
+    dati = db.Prestiti.getAll()
+    dict = [{"id": row[0], "idLibro": row[1], "idTessera": row[2], "dataInizio": row[3], "dataFine": row[4], "restituito": row[5]} for row in dati]
+    return jsonify(dict if dati else [])
+
     
 @app.route("/api/Catalogo", methods=["GET"])
 def catalogo():

@@ -11,6 +11,7 @@ import Register from './pages/register';
 import Login from './pages/login';
 import Landing from './pages/landing';
 import Catalogo from './pages/catalogo';
+import Prestiti from './pages/prestiti';
 
 axios.defaults.baseURL = config.API_URL
 //axios.defaults.withCredentials = true; // Permette di gestire i cookie
@@ -25,7 +26,8 @@ function App() {
       <Routes>
       <Route path='/catalogo' element={<Catalogo />}/>
         <Route path='/' element={<Landing />}/>
-        
+        <Route path='/prestiti' element={<Prestiti />}/>
+
         <Route path='/aggiungiLibri' element={<LibriForm />}/>
         <Route path='/ricercaLibri' element={<RicercaChiave />}/>
         <Route path='/tuttiLibri' element={<LibriCat />}/>
